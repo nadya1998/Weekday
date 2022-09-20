@@ -51,15 +51,15 @@ const week = [
     'Saturday'
 ];
 
-let result = {
-    'Monday': 0,
-    'Tuesday': 0,
-    'Wednesday': 0,
-    'Thursday': 0,
-    'Friday': 0,
-    'Saturday': 0,
-    'Sunday': 0
-};
+let resultMap = new Map([
+    ['Monday', 0],
+    ['Tuesday', 0],
+    ['Wednesday', 0],
+    ['Thursday', 0],
+    ['Friday', 0],
+    ['Saturday', 0],
+    ['Sunday', 0]
+]);
 
 function amountOfProduct(id, elem) {
     for (let i = 0; i < elem.length; i++){
@@ -67,7 +67,8 @@ function amountOfProduct(id, elem) {
             const date = new Date(elem[i].creationDate).getDay();
             const weekDay = week[date];
             const resultQuantity = amountOfProduct(id, elem[i].orderLines);
-            result[weekDay] += resultQuantity;
+            const sum = resultMap.get(weekDay) + resultQuantity;
+            resultMap.set(weekDay, sum);
         } else if(elem[i].productId === id){
             const quantity = elem[i].quantity;
             return quantity;
@@ -75,8 +76,8 @@ function amountOfProduct(id, elem) {
             return 0;
         }
     }
-    // console.log(result);
-    return result;
+    console.log(resultMap);
+    return resultMap;
 }
             
 amountOfProduct(9872, array);
